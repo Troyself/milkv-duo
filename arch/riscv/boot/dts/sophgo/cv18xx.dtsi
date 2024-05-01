@@ -476,6 +476,38 @@
 			clocks = <&osc>;
 		};
 
+		pwm0: pwm@3060000 {
+			compatible = "sophgo,cv1800-pwm";
+			reg = <0x3060000 0x1000>;
+			clocks = <&clk CLK_PWM>;
+			#pwm-cells = <3>;
+			status = "disabled";
+		};
+
+		pwm1: pwm@3061000 {
+			compatible = "sophgo,cv1800-pwm";
+			reg = <0x3061000 0x1000>;
+			clocks = <&clk CLK_PWM>;
+			#pwm-cells = <3>;
+			status = "disabled";
+		};
+
+		pwm2: pwm@3062000 {
+			compatible = "sophgo,cv1800-pwm";
+			reg = <0x3062000 0x1000>;
+			clocks = <&clk CLK_PWM>;
+			#pwm-cells = <3>;
+			status = "disabled";
+		};
+
+		pwm3: pwm@3063000 {
+			compatible = "sophgo,cv1800-pwm";
+			reg = <0x3063000 0x1000>;
+			clocks = <&clk CLK_PWM>;
+			#pwm-cells = <3>;
+			status = "disabled";
+		};
+
 		thermal-zones {
 			soc_thermal_0: soc_thermal_0 {
 				polling-delay-passive = <1000>; /* milliseconds */
