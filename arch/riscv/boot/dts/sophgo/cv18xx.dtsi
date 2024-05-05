@@ -61,6 +61,27 @@
 			#clock-cells = <1>;
 		};
 
+		topctrl: syscon@3000000 {
+			compatible = "sophgo,cv1800-top-syscon",
+				     "syscon", "simple-mfd";
+			reg = <0x03000000 0x1000>;
+			
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			usbphy: phy@48 {
+				compatible = "sophgo,cv1800-usb-phy";
+				reg = <0x48 0x4>;
+				#phy-cells = <0>;
+				clocks = <&clk 92>, <&clk 93>,
+					<&clk 94>, <&clk 95>;
+				clock-names = "phy", "app", "stb", "lpm";
+				vbus_det-gpios = <&portb 6 GPIO_ACTIVE_HIGH>;
+				sophgo,switch-gpios = <&porta 30 GPIO_ACTIVE_HIGH>, 
+						      <&portb 5 GPIO_ACTIVE_HIGH>;
+			};
+		};
+
 		gpio0: gpio@3020000 {
 			compatible = "snps,dw-apb-gpio";
 			reg = <0x3020000 0x1000>;
@@ -291,6 +312,8 @@
 				 <&clk CLK_USB_33K>,
 				 <&clk CLK_USB_12M>;
 			clock-names = "clk_axi", "clk_apb", "clk_125m", "clk_33k", "clk_12m";
+			phys = <&usbphy>;
+			phy-names = "usb2-phy";
 		};
 
 		spi0: spi@4180000 {
