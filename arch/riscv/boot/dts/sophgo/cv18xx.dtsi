@@ -183,6 +183,14 @@
 			};
 		};
 
+		soc_temp: thermal-sensor@30e0000 {
+			compatible = "sophgo,cv1800-thermal";
+			reg = <0x30e0000 0x100>;
+			clocks = <&clk CLK_TEMPSEN>;
+			interrupts = <16 IRQ_TYPE_LEVEL_HIGH>;
+			#thermal-sensor-cells = <0>;
+		};
+
 		i2c0: i2c@4000000 {
 			compatible = "snps,designware-i2c";
 			reg = <0x04000000 0x10000>;
@@ -450,6 +458,34 @@
 			reg = <0x5025000 0x2000>;
 			interrupts = <17 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&osc>;
+		};
+
+		thermal-zones {
+			soc_thermal_0: soc_thermal_0 {
+				polling-delay-passive = <1000>; /* milliseconds */
+				polling-delay = <1000>; /* milliseconds */
+				thermal-sensors = <&soc_temp 0>;
+
+				trips {
+					soc_thermal_trip_0: soc_thermal_trip_0 {
+						temperature = <100000>; /* millicelsius */
+						hysteresis = <5000>; /* millicelsius */
+						type = "passive";
+					};
+
+					soc_thermal_trip_1: soc_thermal_trip_1 {
+						temperature = <110000>; /* millicelsius */
+						hysteresis = <5000>; /* millicelsius */
+						type = "passive";
+					};
+
+					soc_thermal_crtical_0: soc_thermal_crtical_0 {
+						temperature = <130000>; /* millicelsius */
+						hysteresis = <0>; /* millicelsius */
+						type = "critical";
+					};
+				};
+			};
 		};
 	};
 };
