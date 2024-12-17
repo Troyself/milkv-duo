@@ -17,6 +17,7 @@
 		gpio2 = &gpio2;
 		gpio3 = &gpio3;
 		serial0 = &uart0;
+		mmc0 = &sdhci0;
 	};
 
 	chosen {
@@ -46,5 +47,21 @@
 };
 
 &uart0 {
+	status = "okay";
+};
+
+&i2c0 {
+	status = "okay";
+};
+
+&i2c1 {
+	status = "okay";
+};
+
+&i2c2 {
+	status = "okay";
+};
+
+&i2c3 {
 	status = "okay";
 };
