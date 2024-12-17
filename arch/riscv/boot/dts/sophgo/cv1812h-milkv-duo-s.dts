@@ -12,6 +12,10 @@
 	compatible = "milkv,duo-s", "sophgo,cv1812h";
 
 	aliases {
+		gpio0 = &gpio0;
+		gpio1 = &gpio1;
+		gpio2 = &gpio2;
+		gpio3 = &gpio3;
 		serial0 = &uart0;
 	};
 
