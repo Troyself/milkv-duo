@@ -18,6 +18,7 @@
 		gpio3 = &gpio3;
 		serial0 = &uart0;
 		mmc0 = &sdhci0;
+		mmc1 = &emmc;
 	};
 
 	chosen {
@@ -35,6 +36,20 @@
 
 &gmac0 {
 	status = "okay";
+};
+
+&emmc {
+	pinctrl-0 = <&emmc_cfg>;
+	pinctrl-names = "default";
+	status = "okay";
+	bus-width = <4>;
+	max-frequency = <200000000>;
+	mmc-ddr-1_8v;
+	mmc-ddr-3_3v;
+	mmc-hs200-1_8v;
+	no-sd;
+	no-sdio;
+	non-removable;
 };
 
 &sdhci0 {
@@ -64,4 +79,32 @@
 
 &i2c3 {
 	status = "okay";
+};
+
+&pinctrl {
+	emmc_cfg: emmc-cfg {
+		emmc-clk-pins {
+			pinmux = <PINMUX(PIN_EMMC_CLK, 0)>;
+			bias-pull-up;
+			drive-strength-microamp = <16100>;
+			power-source = <3300>;
+		};
+
+		emmc-cmd-pins {
+			pinmux = <PINMUX(PIN_EMMC_CMD, 0)>;
+			bias-pull-up;
+			drive-strength-microamp = <10800>;
+			power-source = <3300>;
+		};
+
+		emmc-data-pins {
+			pinmux = <PINMUX(PIN_EMMC_DAT0, 0)>,
+				 <PINMUX(PIN_EMMC_DAT1, 0)>,
+				 <PINMUX(PIN_EMMC_DAT2, 0)>,
+				 <PINMUX(PIN_EMMC_DAT3, 0)>;
+			bias-pull-up;
+			drive-strength-microamp = <10800>;
+			power-source = <3300>;
+		};
+	};
 };
