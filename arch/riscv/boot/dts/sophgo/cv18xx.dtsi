@@ -281,6 +281,18 @@
 			status = "disabled";
 		};
 
+		usb: usb@04340000 {
+			compatible = "sophgo,cv1800-usb", "snps,dwc2";
+			reg = <0x04340000 0x10000>;
+			interrupts = <30 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clk CLK_AXI4_USB>,
+				 <&clk CLK_APB_USB>,
+				 <&clk CLK_USB_125M>,
+				 <&clk CLK_USB_33K>,
+				 <&clk CLK_USB_12M>;
+			clock-names = "clk_axi", "clk_apb", "clk_125m", "clk_33k", "clk_12m";
+		};
+
 		spi0: spi@4180000 {
 			compatible = "snps,dw-apb-ssi";
 			reg = <0x04180000 0x10000>;
