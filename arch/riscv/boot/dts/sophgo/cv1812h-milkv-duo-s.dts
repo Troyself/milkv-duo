@@ -81,6 +81,22 @@
 	status = "okay";
 };
 
+&spi0 {
+	status = "okay";
+};
+
+&spi1 {
+	status = "okay";
+};
+
+&spi2 {
+	status = "okay";
+};
+
+&spi3 {
+	status = "okay";
+};
+
 &pinctrl {
 	emmc_cfg: emmc-cfg {
 		emmc-clk-pins {
