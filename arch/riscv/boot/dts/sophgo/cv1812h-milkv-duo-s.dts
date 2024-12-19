@@ -97,6 +97,22 @@
 	status = "okay";
 };
 
+&pwm0 {
+        status = "okay";
+};
+
+&pwm1 {
+        status = "okay";
+};
+
+&pwm2 {
+        status = "okay";
+};
+
+&pwm3 {
+	status = "okay";
+};
+
 &pinctrl {
 	emmc_cfg: emmc-cfg {
 		emmc-clk-pins {

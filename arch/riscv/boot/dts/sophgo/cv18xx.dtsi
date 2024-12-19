@@ -89,6 +89,12 @@
 			};
 		};
 
+               rst: reset-controller@3003000 {
+                       compatible = "sophgo,cv1800b-reset";
+                       reg = <0x03003000 0x1000>;
+                       #reset-cells = <1>;
+               };
+
 		gpio0: gpio@3020000 {
 			compatible = "snps,dw-apb-gpio";
 			reg = <0x3020000 0x1000>;
@@ -159,6 +165,36 @@
 				#interrupt-cells = <2>;
 				interrupts = <63 IRQ_TYPE_LEVEL_HIGH>;
 			};
+		};
+
+		saradc: adc@30f0000 {
+			compatible = "sophgo,cv1800b-saradc";
+			reg = <0x030f0000 0x1000>;
+			clocks = <&clk CLK_SARADC>;
+			interrupts = <100 IRQ_TYPE_LEVEL_HIGH>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+
+			channel@0 {
+				reg = <0>;
+			};
+
+			channel@1 {
+				reg = <1>;
+			};
+
+			channel@2 {
+				reg = <2>;
+			};
+		};
+
+		soc_temp: thermal-sensor@30e0000 {
+			compatible = "sophgo,cv1800-thermal";
+			reg = <0x30e0000 0x100>;
+			clocks = <&clk CLK_TEMPSEN>;
+			interrupts = <16 IRQ_TYPE_LEVEL_HIGH>;
+			#thermal-sensor-cells = <0>;
 		};
 
 		i2c0: i2c@4000000 {
@@ -408,6 +444,22 @@
 			status = "disabled";
 		};
 
+		watchdog: watchdog@3010000{
+			compatible = "snps,dw-wdt";
+			reg = <0x3010000 0x100>;
+			interrupts = <58 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&pclk>;
+			resets = <&rst RST_WDT>;
+			status = "disabled";
+		};
+
+		pclk: pclk {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <25000000>;
+		};
+
+
 		plic: interrupt-controller@70000000 {
 			reg = <0x70000000 0x4000000>;
 			interrupts-extended = <&cpu0_intc 11>, <&cpu0_intc 9>;
@@ -428,6 +480,66 @@
 			reg = <0x5025000 0x2000>;
 			interrupts = <17 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&osc>;
+		};
+
+		pwm0: pwm@3060000 {
+			compatible = "sophgo,cv1800-pwm";
+			reg = <0x3060000 0x1000>;
+			clocks = <&clk CLK_PWM>;
+			#pwm-cells = <3>;
+			status = "disabled";
+		};
+
+		pwm1: pwm@3061000 {
+			compatible = "sophgo,cv1800-pwm";
+			reg = <0x3061000 0x1000>;
+			clocks = <&clk CLK_PWM>;
+			#pwm-cells = <3>;
+			status = "disabled";
+		};
+
+		pwm2: pwm@3062000 {
+			compatible = "sophgo,cv1800-pwm";
+			reg = <0x3062000 0x1000>;
+			clocks = <&clk CLK_PWM>;
+			#pwm-cells = <3>;
+			status = "disabled";
+		};
+
+		pwm3: pwm@3063000 {
+			compatible = "sophgo,cv1800-pwm";
+			reg = <0x3063000 0x1000>;
+			clocks = <&clk CLK_PWM>;
+			#pwm-cells = <3>;
+			status = "disabled";
+		};
+
+		thermal-zones {
+			soc_thermal_0: soc_thermal_0 {
+				polling-delay-passive = <1000>; /* milliseconds */
+				polling-delay = <1000>; /* milliseconds */
+				thermal-sensors = <&soc_temp 0>;
+
+				trips {
+					soc_thermal_trip_0: soc_thermal_trip_0 {
+						temperature = <100000>; /* millicelsius */
+						hysteresis = <5000>; /* millicelsius */
+						type = "passive";
+					};
+
+					soc_thermal_trip_1: soc_thermal_trip_1 {
+						temperature = <110000>; /* millicelsius */
+						hysteresis = <5000>; /* millicelsius */
+						type = "passive";
+					};
+
+					soc_thermal_crtical_0: soc_thermal_crtical_0 {
+						temperature = <130000>; /* millicelsius */
+						hysteresis = <0>; /* millicelsius */
+						type = "critical";
+					};
+				};
+			};
 		};
 	};
 };
