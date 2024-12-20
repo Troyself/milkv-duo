@@ -134,12 +134,6 @@
 			#clock-cells = <1>;
 		};
 
-		rst: reset-controller@3003000 {
-			compatible = "sophgo,cv1800b-reset";
-			reg = <0x03003000 0x1000>;
-			#reset-cells = <1>;
-		};
-
 		topctrl: syscon@3000000 {
 			compatible = "sophgo,cv1800-top-syscon",
 				     "syscon", "simple-mfd";
@@ -161,11 +155,11 @@
 			};
 		};
 
-               rst: reset-controller@3003000 {
-                       compatible = "sophgo,cv1800b-reset";
-                       reg = <0x03003000 0x1000>;
-                       #reset-cells = <1>;
-               };
+		rst: reset-controller@3003000 {
+			compatible = "sophgo,cv1800b-reset";
+			reg = <0x03003000 0x1000>;
+			#reset-cells = <1>;
+		};
 
 		gpio0: gpio@3020000 {
 			compatible = "snps,dw-apb-gpio";
