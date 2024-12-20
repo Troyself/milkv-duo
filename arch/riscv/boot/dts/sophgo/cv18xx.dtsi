@@ -61,6 +61,7 @@
 			reg = <0x030a0000 0x14>;
 			interrupts = <79 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&osc>;
+			clock-names = "timer";
 			resets = <&rst RST_TIMER0>;
 			status = "disabled";
 		};
@@ -70,6 +71,7 @@
 			reg = <0x030a0014 0x14>;
 			interrupts = <80 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&osc>;
+			clock-names = "timer";
 			resets = <&rst RST_TIMER1>;
 			status = "disabled";
 		};
@@ -79,6 +81,7 @@
 			reg = <0x030a0028 0x14>;
 			interrupts = <81 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&osc>;
+			clock-names = "timer";
 			resets = <&rst RST_TIMER2>;
 			status = "disabled";
 		};
@@ -88,6 +91,7 @@
 			reg = <0x030a003c 0x14>;
 			interrupts = <82 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&osc>;
+			clock-names = "timer";
 			resets = <&rst RST_TIMER3>;
 			status = "disabled";
 		};
@@ -97,6 +101,7 @@
 			reg = <0x030a0050 0x14>;
 			interrupts = <83 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&osc>;
+			clock-names = "timer";
 			resets = <&rst RST_TIMER4>;
 			status = "disabled";
 		};
@@ -106,6 +111,7 @@
 			reg = <0x030a0064 0x14>;
 			interrupts = <84 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&osc>;
+			clock-names = "timer";
 			resets = <&rst RST_TIMER5>;
 			status = "disabled";
 		};
@@ -115,6 +121,7 @@
 			reg = <0x030a0078 0x14>;
 			interrupts = <85 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&osc>;
+			clock-names = "timer";
 			resets = <&rst RST_TIMER6>;
 			status = "disabled";
 		};
@@ -124,6 +131,7 @@
 			reg = <0x030a008c 0x14>;
 			interrupts = <86 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&osc>;
+			clock-names = "timer";
 			resets = <&rst RST_TIMER7>;
 			status = "disabled";
 		};
