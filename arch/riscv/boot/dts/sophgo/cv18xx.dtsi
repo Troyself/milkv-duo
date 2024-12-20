@@ -527,6 +527,7 @@
 
 
 		plic: interrupt-controller@70000000 {
+			compatible = "riscv,plic0";
 			reg = <0x70000000 0x4000000>;
 			interrupts-extended = <&cpu0_intc 11>, <&cpu0_intc 9>;
 			interrupt-controller;
@@ -536,6 +537,7 @@
 		};
 
 		clint: timer@74000000 {
+			compatible = "riscv,clint0";
 			reg = <0x74000000 0x10000>;
 			interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>;
 		};
