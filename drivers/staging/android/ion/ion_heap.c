@@ -5,6 +5,7 @@
  * Copyright (C) 2011 Google, Inc.
  */
 
+#include "linux/shrinker.h"
 #include <linux/err.h>
 #include <linux/freezer.h>
 #include <linux/kthread.h>
@@ -282,5 +283,8 @@ int ion_heap_init_shrinker(struct ion_heap *heap)
 	heap->shrinker.seeks = DEFAULT_SEEKS;
 	heap->shrinker.batch = 0;
 
-	return register_shrinker(&heap->shrinker);
+	/*return register_shrinker(&heap->shrinker);*/
+	shrinker_register(&heap->shrinker);
+
+	return 0;
 }

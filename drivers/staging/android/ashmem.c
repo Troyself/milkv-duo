@@ -8,6 +8,7 @@
  * Robert Love <rlove@google.com>
  */
 
+#include "linux/shrinker.h"
 #define pr_fmt(fmt) "ashmem: " fmt
 
 #include <linux/init.h>
@@ -372,7 +373,8 @@ ashmem_vmfile_get_unmapped_area(struct file *file, unsigned long addr,
 				unsigned long len, unsigned long pgoff,
 				unsigned long flags)
 {
-	return current->mm->get_unmapped_area(file, addr, len, pgoff, flags);
+	/*return current->mm->get_unmapped_area(file, addr, len, pgoff, flags);*/
+	return mm_get_unmapped_area(current->mm, file, addr, len, pgoff, flags);
 }
 
 static int ashmem_mmap(struct file *file, struct vm_area_struct *vma)
@@ -401,7 +403,8 @@ static int ashmem_mmap(struct file *file, struct vm_area_struct *vma)
 		ret = -EPERM;
 		goto out;
 	}
-	vma->vm_flags &= ~calc_vm_may_flags(~asma->prot_mask);
+	/*vma->vm_flags &= ~calc_vm_may_flags(~asma->prot_mask);*/
+	vm_flags_set(vma, vma->vm_flags & (~calc_vm_may_flags(~asma->prot_mask)));
 
 	if (!asma->file) {
 		char *name = ASHMEM_NAME_DEF;
@@ -948,11 +951,12 @@ static int __init ashmem_init(void)
 		goto out_free2;
 	}
 
-	ret = register_shrinker(&ashmem_shrinker);
-	if (ret) {
-		pr_err("failed to register shrinker!\n");
-		goto out_demisc;
-	}
+	/*ret = register_shrinker(&ashmem_shrinker);*/
+	shrinker_register(&ashmem_shrinker);
+	/*if (ret) {*/
+		/*pr_err("failed to register shrinker!\n");*/
+		/*goto out_demisc;*/
+	/*}*/
 
 	pr_info("initialized\n");
 

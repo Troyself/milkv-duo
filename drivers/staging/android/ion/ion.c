@@ -24,6 +24,8 @@
 #include <linux/uaccess.h>
 #include <linux/vmalloc.h>
 
+#include <linux/plist.h>
+
 #include "ion.h"
 
 static struct ion_device *internal_dev;
