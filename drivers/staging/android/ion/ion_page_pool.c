@@ -9,6 +9,7 @@
 #include <linux/slab.h>
 #include <linux/swap.h>
 #include <linux/sched/signal.h>
+#include <linux/plist.h>
 
 #include "ion.h"
 

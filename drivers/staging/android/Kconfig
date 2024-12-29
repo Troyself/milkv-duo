@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0
 menu "Android"
 
-if ANDROID
+config ANDROID
+	bool "enable android"
 
 config ASHMEM
 	bool "Enable the Anonymous Shared Memory Subsystem"
@@ -15,7 +16,5 @@ config ASHMEM
 	  because it can discard shared memory units when under memory pressure.
 
 source "drivers/staging/android/ion/Kconfig"
-
-endif # if ANDROID
 
 endmenu

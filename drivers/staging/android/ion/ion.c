@@ -24,6 +24,7 @@
 #include <linux/uaccess.h>
 #include <linux/vmalloc.h>
 #include <trace/events/kmem.h>
+#include <linux/plist.h>
 #ifdef CONFIG_COMPAT
 #include "compat_ion.h"
 #endif
@@ -101,7 +102,7 @@ static struct ion_buffer *ion_buffer_create(struct ion_heap *heap,
 	spin_lock(&heap->stat_lock);
 	pre_num_of_alloc_bytes = heap->num_of_alloc_bytes;
 	spin_unlock(&heap->stat_lock);
-	trace_ion_heap_grow(heap->name, len, pre_num_of_alloc_bytes);
+	/*trace_ion_heap_grow(heap->name, len, pre_num_of_alloc_bytes);*/
 
 	spin_lock(&heap->stat_lock);
 	heap->num_of_buffers++;
@@ -139,8 +140,8 @@ void ion_buffer_destroy(struct ion_buffer *buffer)
 	spin_lock(&buffer->heap->stat_lock);
 	pre_num_of_alloc_bytes = buffer->heap->num_of_alloc_bytes;
 	spin_unlock(&buffer->heap->stat_lock);
-	trace_ion_heap_shrink(buffer->heap->name, buffer->size,
-			      pre_num_of_alloc_bytes);
+	/*trace_ion_heap_shrink(buffer->heap->name, buffer->size,*/
+			      /*pre_num_of_alloc_bytes);*/
 
 	spin_lock(&buffer->heap->stat_lock);
 	buffer->heap->num_of_buffers--;
@@ -331,14 +332,16 @@ static void ion_dma_buf_release(struct dma_buf *dmabuf)
 	_ion_buffer_destroy(buffer);
 }
 
-static void *ion_dma_buf_vmap(struct dma_buf *dmabuf)
+/*static void *ion_dma_buf_vmap(struct dma_buf *dmabuf)*/
+static int ion_dma_buf_vmap(struct dma_buf *dmabuf, struct iosys_map *map)
 {
-	struct ion_buffer *buffer = dmabuf->priv;
+	/*struct ion_buffer *buffer = dmabuf->priv;*/
 
-	return buffer->vaddr;
+	/*return buffer->vaddr;*/
+	return 0;
 }
 
-static void ion_dma_buf_vunmap(struct dma_buf *dmabuf, void *ptr)
+static void ion_dma_buf_vunmap(struct dma_buf *dmabuf, struct iosys_map *map)
 {
 }
 
@@ -906,7 +909,7 @@ subsys_initcall(ion_device_create);
 #include <linux/syscalls.h>
 void ion_free(pid_t pid, int fd)
 {
-	ksys_close(fd);
+	/*ksys_close(fd);*/
 }
 EXPORT_SYMBOL(ion_free);
 #endif

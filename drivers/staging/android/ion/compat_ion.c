@@ -56,11 +56,13 @@ long compat_ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 	switch (cmd) {
 	case COMPAT_ION_IOC_CUSTOM: {
 		struct compat_ion_custom_data __user *data32;
-		struct ion_custom_data __user *data;
+		/*struct ion_custom_data __user *data;*/
+		struct ion_custom_data *data;
 		int err;
 
 		data32 = compat_ptr(arg);
-		data = compat_alloc_user_space(sizeof(*data));
+		/*data = compat_alloc_user_space(sizeof(*data));*/
+		data = kmalloc(sizeof(*data), GFP_KERNEL);
 		if (!data)
 			return -EFAULT;
 
