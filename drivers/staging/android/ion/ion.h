@@ -21,6 +21,8 @@
 
 #include "../uapi/ion.h"
 
+#define	CONFIG_ION_CVITEK 1
+
 /**
  * struct ion_platform_heap - defines a heap in the given platform
  * @type:	type of the heap from ion_heap_type enum
@@ -368,15 +370,15 @@ void ion_free_nofd(struct ion_buffer *buffer);
 int ion_buf_begin_cpu_access(struct ion_buffer *buffer);
 int ion_buf_end_cpu_access(struct ion_buffer *buffer);
 
-#ifdef CONFIG_ION_CARVEOUT_HEAP
-struct ion_heap *ion_carveout_heap_create(struct ion_platform_heap *heap_data);
-#else
-static inline struct ion_heap
-*ion_carveout_heap_create(struct ion_platform_heap *heap_data)
-{
-	return ERR_PTR(-EINVAL);
-}
-#endif
+//#ifdef CONFIG_ION_CARVEOUT_HEAP
+//struct ion_heap *ion_carveout_heap_create(struct ion_platform_heap *heap_data);
+//#else
+//static inline struct ion_heap
+//*ion_carveout_heap_create(struct ion_platform_heap *heap_data)
+//{
+	//return ERR_PTR(-EINVAL);
+//}
+//#endif
 #endif
 #ifdef CONFIG_ION_CHUNK_HEAP
 struct ion_heap
