@@ -13,6 +13,27 @@
 	#address-cells = <1>;
 	#size-cells = <1>;
 
+	reserved-memory {
+		#size-cells = <1>;
+		#address-cells = <1>;
+		ranges;
+
+		ion_reserved: ion {
+			compatible = "ion-region";
+			size = <0xaa00000>;
+		};
+	};
+
+	cvitek-ion {
+		compatible = "cvitek,cvitek-ion";
+
+		heap_carveout@0 {
+			compatible = "cvitek,carveout";
+			memory-region = <&ion_reserved>;
+		};
+	};
+
+
 	cpus: cpus {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -617,5 +638,21 @@
 				};
 			};
 		};
+
+		tpu {
+			compatible = "cvitek,tpu";
+			reg-names = "tdma", "tiu";
+			reg = <0x0C100000 0x1000>,
+			      <0x0C101000 0x1000>;
+			clocks = <&clk CLK_TPU>, <&clk CLK_TPU_FAB>;
+			clock-names = "clk_tpu_axi", "clk_tpu_fab";
+			resets = <&rst RST_TDMA>, <&rst RST_TPU>, <&rst RST_TPUSYS>;
+			reset-names = "res_tdma", "res_tpu", "res_tpusys";
+			interrupts = <75 IRQ_TYPE_LEVEL_HIGH>,
+				     <76 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "tiu_irq", "tdma_irq";
+			interrupt-parent = <&plic>;
+		};
+
 	};
 };
