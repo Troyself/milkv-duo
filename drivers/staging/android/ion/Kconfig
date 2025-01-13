@@ -46,7 +46,7 @@ config ION_CMA_HEAP
 
 config ION_CVITEK
     tristate "Ion for Cvitek"
-	depends on ARCH_CVITEK && ION
+	depends on ARCH_SOPHGO && ION
 	select ION_OF
 	help
 	  Choose this option if you wish to use ion on Cvitek Platform

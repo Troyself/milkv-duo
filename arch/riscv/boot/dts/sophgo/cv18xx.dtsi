@@ -13,6 +13,27 @@
 	#address-cells = <1>;
 	#size-cells = <1>;
 
+	reserved-memory {
+		#size-cells = <1>;
+		#address-cells = <1>;
+		ranges;
+
+		ion_reserved: ion {
+			compatible = "ion-region";
+			size = <0xaa00000>;
+		};
+	};
+
+	cvitek-ion {
+		compatible = "cvitek,cvitek-ion";
+
+		heap_carveout@0 {
+			compatible = "cvitek,carveout";
+			memory-region = <&ion_reserved>;
+		};
+	};
+
+
 	cpus: cpus {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -632,5 +653,6 @@
 			interrupt-names = "tiu_irq", "tdma_irq";
 			interrupt-parent = <&plic>;
 		};
+
 	};
 };

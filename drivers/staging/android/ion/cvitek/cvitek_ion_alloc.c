@@ -39,18 +39,19 @@ int _cvi_ion_alloc(enum ion_heap_type type, size_t len, bool mmap_cache, struct 
 		 __func__, len, type,
 		 (mmap_cache) ? "cacheable" : "un-cacheable");
 
-#if defined(__arm__) || defined(__aarch64__)
-	set_fs(KERNEL_DS);
-#else
-	mm_segment_t old_fs = force_uaccess_begin();
-#endif
+//why comment: https://lore.kernel.org/all/20220216131332.1489939-19-arnd@kernel.org/
+/*#if defined(__arm__) || defined(__aarch64__)*/
+	/*set_fs(KERNEL_DS);*/
+/*#else*/
+	/*mm_segment_t old_fs = force_uaccess_begin();*/
+/*#endif*/
 	ret = ion_query_heaps(&query, true);
 
-#if defined(__arm__) || defined(__aarch64__)
-	set_fs(old_fs);
-#else
-	force_uaccess_end(old_fs);
-#endif
+/*#if defined(__arm__) || defined(__aarch64__)*/
+	/*set_fs(old_fs);*/
+/*#else*/
+	/*force_uaccess_end(old_fs);*/
+/*#endif*/
 
 	if (ret != 0)
 		return ret;

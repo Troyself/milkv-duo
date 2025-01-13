@@ -21,6 +21,7 @@
 #include <linux/mm.h>
 #include <linux/swap.h>
 #include <linux/version.h>
+#include <linux/plist.h>
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 10, 0))
 #include <linux/dma-map-ops.h>
 #endif
@@ -492,7 +493,8 @@ out:
 	return ret;
 }
 
-static int cvitek_ion_remove(struct platform_device *pdev)
+/*static int cvitek_ion_remove(struct platform_device *pdev)*/
+static void cvitek_ion_remove(struct platform_device *pdev)
 {
 	struct cvi_ion_dev *ipdev;
 
@@ -500,7 +502,7 @@ static int cvitek_ion_remove(struct platform_device *pdev)
 	kfree(ipdev->heaps);
 	ion_destroy_platform_data(ipdev->plat_data);
 
-	return 0;
+	/*return 0;*/
 }
 
 static const struct of_device_id cvitek_ion_match_table[] = {
@@ -524,7 +526,7 @@ static int __init cvitek_ion_init(void)
 
 subsys_initcall(cvitek_ion_init);
 
-#ifdef CONFIG_OF_RESERVED_MEM
+/*#ifdef CONFIG_OF_RESERVED_MEM*/
 #include <linux/of.h>
 #include <linux/of_fdt.h>
 #include <linux/of_reserved_mem.h>
@@ -553,6 +555,7 @@ static const struct reserved_mem_ops rmem_dma_ops = {
 
 static int __init rmem_ion_setup(struct reserved_mem *rmem)
 {
+	pr_err("rmem_ion_setup");
 	phys_addr_t size = rmem->size;
 
 	size = size / 1024 / 1024;
@@ -566,4 +569,4 @@ static int __init rmem_ion_setup(struct reserved_mem *rmem)
 RESERVEDMEM_OF_DECLARE(vpp, "vpp-region", rmem_ion_setup);
 RESERVEDMEM_OF_DECLARE(npu, "npu-region", rmem_ion_setup);
 RESERVEDMEM_OF_DECLARE(ion, "ion-region", rmem_ion_setup);
-#endif
+/*#endif*/
