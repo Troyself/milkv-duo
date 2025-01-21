@@ -11,6 +11,27 @@
 / {
 	compatible = "sophgo,cv1812h";
 
+	reserved-memory {
+		#size-cells = <1>;
+		#address-cells = <1>;
+		ranges;
+
+		ion_reserved: ion {
+			compatible = "ion-region";
+			size = <0xaa00000>;
+		};
+	};
+
+	cvitek-ion {
+		compatible = "cvitek,cvitek-ion";
+
+		heap_carveout@0 {
+			compatible = "cvitek,carveout";
+			memory-region = <&ion_reserved>;
+		};
+	};
+
+
 	memory@80000000 {
 		device_type = "memory";
 		reg = <0x80000000 0x10000000>;
