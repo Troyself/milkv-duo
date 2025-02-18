@@ -445,7 +445,8 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
 	config.hs_sel_src = DWAXIDMAC_HS_SEL_HW;
 	switch (chan->direction) {
 	case DMA_MEM_TO_DEV:
-		dw_axi_dma_set_byte_halfword(chan, true);
+		if (chan->chip->apb_regs)
+			dw_axi_dma_set_byte_halfword(chan, true);
 		config.tt_fc = chan->config.device_fc ?
 				DWAXIDMAC_TT_FC_MEM_TO_PER_DST :
 				DWAXIDMAC_TT_FC_MEM_TO_PER_DMAC;
@@ -826,7 +827,8 @@ dw_axi_dma_chan_prep_cyclic(struct dma_chan *dchan, dma_addr_t dma_addr,
 		llp = hw_desc->llp;
 	} while (total_segments);
 
-	dw_axi_dma_set_hw_channel(chan, true);
+	if (chan->chip->apb_regs)
+		dw_axi_dma_set_hw_channel(chan, true);
 
 	return vchan_tx_prep(&chan->vc, &desc->vd, flags);
 
@@ -906,7 +908,8 @@ dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
 		llp = hw_desc->llp;
 	} while (num_sgs);
 
-	dw_axi_dma_set_hw_channel(chan, true);
+	if (chan->chip->apb_regs)
+		dw_axi_dma_set_hw_channel(chan, true);
 
 	return vchan_tx_prep(&chan->vc, &desc->vd, flags);
 
@@ -1195,7 +1198,7 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
 		dev_warn(dchan2dev(dchan),
 			 "%s failed to stop\n", axi_chan_name(chan));
 
-	if (chan->direction != DMA_MEM_TO_MEM)
+	if (chan->direction != DMA_MEM_TO_MEM && chan->chip->apb_regs)
 		dw_axi_dma_set_hw_channel(chan, false);
 	if (chan->direction == DMA_MEM_TO_DEV)
 		dw_axi_dma_set_byte_halfword(chan, false);
