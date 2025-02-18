@@ -161,6 +161,13 @@
 				sophgo,switch-gpios = <&porta 30 GPIO_ACTIVE_HIGH>, 
 						      <&portb 5 GPIO_ACTIVE_HIGH>;
 			};
+
+			dmamux: dma-router@154 {
+				compatible = "sophgo,cv1800b-dmamux";
+				reg = <0x154 0x8>, <0x298 0x4>;
+				#dma-cells = <2>;
+				dma-masters = <&dmac>;
+			};
 		};
 
 		rst: reset-controller@3003000 {

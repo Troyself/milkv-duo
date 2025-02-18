@@ -61,6 +61,10 @@
 	disable-wp;
 };
 
+&dmac {
+	status = "okay";
+};
+
 &uart0 {
 	status = "okay";
 };
