@@ -72,7 +72,8 @@ static int cv1800_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm,
 			     bool enable)
 {
 	struct cv1800_pwm *priv = to_cv1800_pwm_dev(chip);
-	u32 pwm_enable, state;
+	u32 pwm_enable;
+	unsigned int val;
 
 	regmap_read(priv->map, PWM_CV1800_START, &pwm_enable);
 	pwm_enable &= PWM_CV1800_START_MASK(pwm->hwpwm);
@@ -96,14 +97,10 @@ static int cv1800_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm,
 				   PWM_CV1800_START_MASK(pwm->hwpwm), 0);
 	}
 
-	/* check and set OE/Output-Enable mode */
-	regmap_read(priv->map, PWM_CV1800_OE, &state);
-
-	if ((state & BIT(pwm->hwpwm)) && enable)
-		regmap_update_bits(priv->map, PWM_CV1800_OE,
-				   PWM_CV1800_OE_MASK(pwm->hwpwm),
-				   PWM_CV1800_REG_ENABLE(pwm->hwpwm));
-
+	val = enable ? PWM_CV1800_REG_ENABLE(pwm->hwpwm) : 0;
+	/* set OE/Output-Enable mode */
+	regmap_update_bits(priv->map, PWM_CV1800_OE,
+			PWM_CV1800_OE_MASK(pwm->hwpwm), val);
 	return 0;
 }
 
